@@ -43,12 +43,12 @@ const Post = mongoose.model("Post",postSchema);
 app.get("/", function(req, res) {
  
   // Find all items in the Posts collection and render it into our home page.
- Post.find().then(posts =>{
-      res.render("home", {
-        startingContent: homeStartingContent,
-        posts: posts
-        });
+  Post.find().then(posts => {
+    res.render("home", {
+      startingContent: homeStartingContent,
+      posts: posts
     });
+  });
 });
  
 app.get("/about", function(req, res){
@@ -74,20 +74,12 @@ app.post("/compose", function(req, res){
   //We are saving the post through our compose route and redirecting back into the home route. A message will be displayed in our console when a post is being saved.
  
   post.save().then(() => {
- 
     console.log('Post added to DB.');
- 
     res.redirect('/');
- 
   })
- 
   .catch(err => {
- 
     res.status(400).send("Unable to save post to database.");
- 
   });
- 
- 
 });
  
 app.get("/posts/:postId", function(req, res){
@@ -99,15 +91,13 @@ app.get("/posts/:postId", function(req, res){
   Post.findOne({_id:requestedPostId})
   .then(function (post) {
     res.render("post", {
-            title: post.title,
-            content: post.content
-          });
-    })
-    .catch(function(err){
-      console.log(err);
-    })
- 
- 
+      title: post.title,
+      content: post.content
+    });
+  })
+  .catch(function(err){
+    console.log(err);
+  })
 });
  
 app.listen(3000, function() {
